@@ -1,33 +1,25 @@
 
 
-# Random Islamic Qoutes 🕊
-An Islamic Quotes web app that displays different Islamic Quotes at random whenever refreshed.
-Anyone can use it in their README.md file or on their website/ Github by the following HTML tag.<br>
+# Programming Gifs 👨🏼‍💻
+Programming-gifs is a web app that displays different gifs related to programming at random whenever refreshed.
+Anyone can use it in their README.md file or on their website/ Github by the following HTML tag..<br>
 
-## Use it as header
-```
-<img align='right' src='https://islamic-qoutes-header.herokuapp.com/' height=300 alt='samadpls/islamic-qoutes'>
+## How to use ✍🏻
+`copy-paste the following line in your README.md to display random programming-gifs 👇🏻 `
+<br>
 
-```
+```ruby
 
-## Demo
-
-<img src='https://islamic-qoutes-header.herokuapp.com/' width=100%><br>
-
-## Use it as Post
-```
-<img align='right' src='https://islamic-qoutes.herokuapp.com/' height=300 alt='samadpls/islamic-qoutes'>
+<a href='https://github.com/samadpls/Programing-Gifs'>
+<img align='right' src='https://programming-gifs.herokuapp.com/' widht=100 height=300 alt='samadpls/Programming-Gifs'></a>
 
 ```
 `You can also change alignment and  height according to your need.`
-## Demo
+# Demo
 
-<img src='https://islamic-qoutes.herokuapp.com/' height=300s><br>
+<a href='https://github.com/samadpls/Programing-Gifs'>
+<img align='right' src='https://programming-gifs.herokuapp.com/' widht=100% alt='samadpls/Programming-Gifs'></a>
 
-## FAQ
-### Purpose?
-- I decided to contribute by portraying the positive image of Islam by displaying the Quranic Ayats (Holy Book of Islam). I hope you guys will love it.
-## What is Islam?
+<br><br>
 
-- The word **“Islam”** means “submission to the will of God.” Followers of Islam are called Muslims. Muslims are monotheistic and worship one, all-knowing God, who in Arabic is known as Allah. Followers of Islam aim to live a life of complete submission to Allah.
-
+### `You can contribute to this  great project by adding more gifs in the static/images folder`
