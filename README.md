@@ -1,4 +1,4 @@
-
+![GitHub Repo stars](https://img.shields.io/github/stars/samadpls/Programing-Gifs?style=social)
 
 # Programming Gifs 👨🏼‍💻
 Programming-gifs is a web app that displays different gifs related to programming at random whenever refreshed.
@@ -15,9 +15,9 @@ Anyone can use it in their README.md file or on their website/ Github by the fol
 
 ```
 `You can also change alignment and  height according to your need.`
-# Demo
-
-<a href='https://github.com/samadpls/Programing-Gifs'><img align='right' src='https://programming-gifs.herokuapp.com/' widht=100% alt='samadpls/Programming-Gifs'></a>
+ | Demo |
+|---|
+| <a href='https://github.com/samadpls/Programing-Gifs'><img align='right' src='https://programming-gifs.herokuapp.com/' widht=100% alt='samadpls/Programming-Gifs'></a> |
 
 <br><br>
 
