@@ -11,8 +11,7 @@ def set_response_headers(response):
 
 @app.route("/", methods=["GET"])
 def index():
-    import os, random
-    path=random.choice(os.listdir("static/gifs"))    
+    import os, random    
     return send_file(f"static/gifs/{path}", mimetype='image/gif')
 
 
