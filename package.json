@@ -1,20 +1,21 @@
 {
-    "name": "Programing-Gifs",
-    "version": "1.0.0",
-    "description": "",
-    "scripts": {
-        "build": "echo \"No build specified\" && exit 1",
-        "test": "echo \"No test specified\" && exit 1",
-        "start": "node index.js"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/samadpls/Programing-Gifs.git"
-    },
-    "author": "",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/samadpls/Programing-Gifs/issues"
-    },
-    "homepage": "https://github.com/samadpls/Programing-Gifs#readme"
+  "name": "programing-gifs",
+  "version": "1.0.0",
+  "description": "![GitHub Repo stars](https://img.shields.io/github/stars/samadpls/Programing-Gifs?style=social)",
+  "scripts": {
+    "build": "echo \"No build specified\" && exit 1",
+    "test": "echo \"No test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/samadpls/Programing-Gifs.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/samadpls/Programing-Gifs/issues"
+  },
+  "homepage": "https://github.com/samadpls/Programing-Gifs#readme",
+  "main": "index.js"
 }
