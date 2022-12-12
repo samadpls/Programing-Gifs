@@ -3,8 +3,12 @@ var http = require("http");
 var fs = require("fs");
 const testFolder = './static/gifs';
 
+const hostname = '127.0.0.1';
+const port = 3000;
 // Create an HTTP server that listens for incoming requests on port 8080
-http.createServer(function(request, response) {
+// http.createServer(function(request, response) {
+
+const server=http.createServer((request,response)=>{
   // If the request is for the root url "/", serve the image file
   if (request.url == "/") {
     // Read the image file from the filesystem
@@ -27,7 +31,13 @@ http.createServer(function(request, response) {
 	})
    
   }
-}).listen(3000);
+})
+
+
+
+server.listen(port, hostname, () => {
+	console.log(`Server running at http://${hostname}:${port}/`);
+  });
 // fs.readdir(testFolder, (err, files) => {
 // 	var fileName= files[Math.floor(Math.random()*files.length)];
 // 	console.log(fileName)  
