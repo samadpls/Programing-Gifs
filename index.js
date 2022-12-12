@@ -7,7 +7,10 @@ const hostname = '127.0.0.1';
 const port = process.env.PORT | 3000
 // Create an HTTP server that listens for incoming requests on port 8080
 // http.createServer(function(request, response) {
+const cache = require('node-cache');
 
+// Clear the cache
+cache.clear;
 const server=http.createServer((request,response)=>{
   // If the request is for the root url "/", serve the image file
   if (request.url == "/") {
