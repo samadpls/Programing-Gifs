@@ -1,0 +1,34 @@
+// Load the http and fs modules
+var http = require("http");
+var fs = require("fs");
+const testFolder = './static/gifs';
+
+// Create an HTTP server that listens for incoming requests on port 8080
+http.createServer(function(request, response) {
+  // If the request is for the root url "/", serve the image file
+  if (request.url == "/") {
+    // Read the image file from the filesystem
+	fs.readdir(testFolder,(err,files)=>{
+		var fileName=files[Math.floor(Math.random()*files.length)];
+		console.log(fileName)
+	fs.readFile("./static/gifs/"+fileName, function(err, data) {
+		if (err) {
+			// If there was an error reading the file, send a 404 Not Found response
+			response.writeHead(404);
+			response.end();
+			return;
+		}
+	
+		// Otherwise, send the image file data in the response
+		response.writeHead(200, { "Content-Type": "image/jpeg" });
+		response.end(data);
+		});
+		
+	})
+   
+  }
+}).listen(80);
+// fs.readdir(testFolder, (err, files) => {
+// 	var fileName= files[Math.floor(Math.random()*files.length)];
+// 	console.log(fileName)  
+//   });
