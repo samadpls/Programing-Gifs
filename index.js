@@ -35,9 +35,7 @@ const server=http.createServer((request,response)=>{
 
 
 
-server.listen(port, hostname, () => {
-	console.log(`Server running at http://${hostname}:${port}/`);
-  });
+server.listen(port, () => {console.log('Server Started');});
 // fs.readdir(testFolder, (err, files) => {
 // 	var fileName= files[Math.floor(Math.random()*files.length)];
 // 	console.log(fileName)  
