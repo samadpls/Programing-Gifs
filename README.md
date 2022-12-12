@@ -11,13 +11,13 @@ Anyone can use it in their README.md file or on their website/ Github by the fol
 ```ruby
 
 <a href='https://github.com/samadpls/Programing-Gifs'>
-<img align='right' src='https://programming-gifs.herokuapp.com/' widht=100 height=300 alt='samadpls/Programming-Gifs'></a>
+<img align='right' src='https://programming-gifs.cyclic.app/' widht=100 height=300 alt='samadpls/Programming-Gifs'></a>
 
 ```
 `You can also change alignment and  height according to your need.`
  | Demo |
 |---|
-| <a href='https://github.com/samadpls/Programing-Gifs'><img align='right' src='https://programming-gifs.herokuapp.com/' widht=100% alt='samadpls/Programming-Gifs'></a> |
+| <a href='https://github.com/samadpls/Programing-Gifs'><img align='right' src='https://programming-gifs.cyclic.app/' widht=100% alt='samadpls/Programming-Gifs'></a> |
 
 <br><br>
 
