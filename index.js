@@ -27,7 +27,7 @@ http.createServer(function(request, response) {
 	})
    
   }
-}).listen(80);
+}).listen(3000);
 // fs.readdir(testFolder, (err, files) => {
 // 	var fileName= files[Math.floor(Math.random()*files.length)];
 // 	console.log(fileName)  
