@@ -4,7 +4,7 @@ var fs = require("fs");
 const testFolder = './static/gifs';
 
 const hostname = '127.0.0.1';
-const port = 3000;
+const port = process.env.PORT | 3000
 // Create an HTTP server that listens for incoming requests on port 8080
 // http.createServer(function(request, response) {
 
