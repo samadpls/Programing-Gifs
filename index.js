@@ -11,12 +11,26 @@ const port = process.env.PORT | 3000
 
 // // Clear the cache
 // cache.flushAll();
-function nocache(req, res, next) {
-	res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
-	res.header('Expires', '-1');
-	res.header('Pragma', 'no-cache');
-	next();
-  }
+var module = require('module');
+
+// Use the module
+// Create a custom `require.cache.clear()` method
+require.cache.clear = function() {
+	// Loop through all the keys in the require cache
+	Object.keys(require.cache).forEach(function(key) {
+	  // Delete the key from the require cache
+	  delete require.cache[key];
+	});
+  };
+  
+  // Use the custom `require.cache.clear()` method to clear the cache
+  
+// Clear the cache
+require.cache.clear();
+
+// Require the module again to load the updated version
+const updatedModule = require('module');
+
 const server=http.createServer((request,response)=>{
   // If the request is for the root url "/", serve the image file
   if (request.url == "/") {
