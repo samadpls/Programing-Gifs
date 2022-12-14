@@ -17,7 +17,7 @@ Anyone can use it in their README.md file or on their website/ Github by the fol
 `You can also change alignment and  height according to your need.`
  | Demo |
 |---|
-| <a href='https://github.com/samadpls/Programing-Gifs'><img align='right' src='https://programming-gifs.cyclic.app/' widht=100% alt='samadpls/Programming-Gifs'></a> |
+| <a href='https://github.com/samadpls/Programing-Gifs'><img align='right' src='https://wicked-top-coat-pike.cyclic.app' widht=100% alt='samadpls/Programming-Gifs'></a> |
 
 <br><br>
 
