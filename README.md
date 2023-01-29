@@ -21,4 +21,4 @@ Anyone can use it in their README.md file or on their website/ Github by the fol
 
 <br><br>
 
-### `You can contribute to this  great project by adding more gifs in the static/images folder`
+### `You can contribute to this  great project by adding more gifs in the static/gifs folder`
