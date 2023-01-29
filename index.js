@@ -47,7 +47,12 @@ const server=http.createServer((request,response)=>{
 		}
 	
 		// Otherwise, send the image file data in the response
-		response.writeHead(200, { "Content-Type": "image/jpeg" });
+		response.writeHead(200, {
+			"Content-Type": "image/jpeg",
+			"Cache-Control": "no-cache, no-store, must-revalidate",
+			"Pragma": "no-cache",
+			"Expires": "0"
+		});
 		response.end(data);
 		});
 		
