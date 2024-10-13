@@ -2,7 +2,10 @@ const fs = require('fs');
 const path = require('path');
 
 exports.handler = async (event) => {
-  const testFolder = path.join(process.cwd(), 'static', 'gifs');
+  const projectRoot = path.join(process.cwd(), '..');
+  const testFolder = path.join(projectRoot, 'static', 'gifs');
+
+  console.log('Attempting to read directory:', testFolder);
 
   try {
     const files = await fs.promises.readdir(testFolder);
@@ -10,9 +13,11 @@ exports.handler = async (event) => {
     if (files.length === 0) {
       return {
         statusCode: 500,
-        body: 'No images found',
+        body: JSON.stringify({ error: 'No images found' }),
       };
     }
+
+    console.log('Files found:', files);
 
     const fileName = files[Math.floor(Math.random() * files.length)];
     const filePath = path.join(testFolder, fileName);
@@ -33,7 +38,7 @@ exports.handler = async (event) => {
     console.error('Error reading images:', err);
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: 'Error reading images', details: err.message }),
+      body: JSON.stringify({ error: 'Error reading images', details: err.message, path: testFolder }),
     };
   }
 };
