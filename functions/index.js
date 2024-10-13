@@ -37,7 +37,7 @@ exports.handler = async (event) => {
       const currentDirFiles = await fs.readdir(path.join(__dirname, '..'));
       console.error('Current directory contents:', currentDirFiles);
     } catch (dirErr) {
-      console.error('Error reading current directory:', dirErr);
+      console.error('Error reading current directory:', dirErr, currentDirFiles);
     }
     
     return {
