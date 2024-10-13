@@ -2,8 +2,8 @@ const fs = require('fs').promises;
 const path = require('path');
 
 exports.handler = async (event) => {
-
-  const testFolder = path.join(__dirname, '..', 'gifs');
+  
+  const testFolder = path.join(__dirname, '.', 'static', 'gifs');
 
   try {
     const files = await fs.readdir(testFolder);
