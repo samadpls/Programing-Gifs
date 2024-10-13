@@ -23,19 +23,45 @@ const exploreDirectory = async (dirPath, depth = 0, maxDepth = 3) => {
 exports.handler = async (event) => {
   console.log('Function started');
   console.log('Current working directory:', process.cwd());
+  console.log('__dirname:', __dirname);
   
+  const potentialPaths = [
+    process.cwd(),
+    path.join(process.cwd(), '..'),
+    '/var/task',
+    '/opt',
+    '/'
+  ];
+
   try {
     console.log('Exploring file system structure:');
-    await exploreDirectory(process.cwd(), 0, 4);
-    await exploreDirectory('/var', 0, 4);
+    for (const p of potentialPaths) {
+      console.log(`Exploring ${p}:`);
+      await exploreDirectory(p, 0, 3);
+    }
     
     console.log('Environment variables:');
     console.log(JSON.stringify(process.env, null, 2));
 
-    const testFolder = path.join(process.cwd(), 'static', 'gifs');
-    console.log('Attempting to read directory:', testFolder);
-    
-    const files = await fs.readdir(testFolder);
+    // Attempt to find the gifs folder
+    let gifsFolder = null;
+    for (const p of potentialPaths) {
+      const testPath = path.join(p, 'static', 'gifs');
+      try {
+        await fs.access(testPath);
+        gifsFolder = testPath;
+        break;
+      } catch (error) {
+        console.log(`${testPath} not accessible`);
+      }
+    }
+
+    if (!gifsFolder) {
+      throw new Error('Gifs folder not found in any of the expected locations');
+    }
+
+    console.log('Gifs folder found at:', gifsFolder);
+    const files = await fs.readdir(gifsFolder);
     console.log('Files found:', files);
 
     if (files.length === 0) {
@@ -46,7 +72,7 @@ exports.handler = async (event) => {
     }
 
     const fileName = files[Math.floor(Math.random() * files.length)];
-    const filePath = path.join(testFolder, fileName);
+    const filePath = path.join(gifsFolder, fileName);
     const data = await fs.readFile(filePath);
 
     return {
