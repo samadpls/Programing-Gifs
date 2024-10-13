@@ -2,8 +2,7 @@ const fs = require('fs').promises;
 const path = require('path');
 
 exports.handler = async (event) => {
-  
-  const testFolder = path.join(__dirname, '.', 'static', 'gifs');
+  const testFolder = path.join(__dirname, '..', 'static', 'gifs');
 
   try {
     const files = await fs.readdir(testFolder);
@@ -32,9 +31,21 @@ exports.handler = async (event) => {
     };
   } catch (err) {
     console.error('Error reading images:', err);
+    
+    // Print current directory contents
+    try {
+      const currentDirFiles = await fs.readdir(path.join(__dirname, '..'));
+      console.error('Current directory contents:', currentDirFiles);
+    } catch (dirErr) {
+      console.error('Error reading current directory:', dirErr);
+    }
+    
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: 'Error reading images', details: err.message }),
+      body: JSON.stringify({ 
+        error: 'Error reading images', 
+        details: err.message 
+      }),
     };
   }
 };
