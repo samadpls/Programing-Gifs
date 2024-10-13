@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 exports.handler = async (event) => {
-  const testFolder = path.join(__dirname, '..', 'static', 'gifs');
+  const testFolder = path.join(process.cwd(), 'static', 'gifs');
 
   try {
     const files = await fs.promises.readdir(testFolder);
@@ -33,7 +33,7 @@ exports.handler = async (event) => {
     console.error('Error reading images:', err);
     return {
       statusCode: 500,
-      body: 'Error reading images',
+      body: JSON.stringify({ error: 'Error reading images', details: err.message }),
     };
   }
 };
