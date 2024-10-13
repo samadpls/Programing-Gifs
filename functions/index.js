@@ -1,14 +1,48 @@
-const fs = require('fs');
+const fs = require('fs').promises;
 const path = require('path');
 
-exports.handler = async (event) => {
-  const projectRoot = path.join(process.cwd(), '..');
-  const testFolder = path.join(projectRoot, 'static', 'gifs');
+const findGifsFolder = async (startPath) => {
+  const queue = [startPath];
+  while (queue.length > 0) {
+    const currentPath = queue.shift();
+    try {
+      const items = await fs.readdir(currentPath, { withFileTypes: true });
+      for (const item of items) {
+        const itemPath = path.join(currentPath, item.name);
+        if (item.isDirectory()) {
+          if (item.name === 'gifs') {
+            return itemPath;
+          }
+          queue.push(itemPath);
+        }
+      }
+    } catch (error) {
+      console.error(`Error reading directory ${currentPath}:`, error);
+    }
+  }
+  return null;
+};
 
-  console.log('Attempting to read directory:', testFolder);
+exports.handler = async (event) => {
+  console.log('Function started');
+  console.log('Current working directory:', process.cwd());
 
   try {
-    const files = await fs.promises.readdir(testFolder);
+    console.log('Searching for gifs folder...');
+    const gifsFolder = await findGifsFolder('/var');
+    
+    if (!gifsFolder) {
+      console.error('Gifs folder not found');
+      return {
+        statusCode: 500,
+        body: JSON.stringify({ error: 'Gifs folder not found' }),
+      };
+    }
+
+    console.log('Gifs folder found at:', gifsFolder);
+
+    const files = await fs.readdir(gifsFolder);
+    console.log('Files in gifs folder:', files);
 
     if (files.length === 0) {
       return {
@@ -17,11 +51,11 @@ exports.handler = async (event) => {
       };
     }
 
-    console.log('Files found:', files);
-
     const fileName = files[Math.floor(Math.random() * files.length)];
-    const filePath = path.join(testFolder, fileName);
-    const data = await fs.promises.readFile(filePath); 
+    const filePath = path.join(gifsFolder, fileName);
+    console.log('Selected file:', filePath);
+
+    const data = await fs.readFile(filePath);
 
     return {
       statusCode: 200,
@@ -35,10 +69,14 @@ exports.handler = async (event) => {
       isBase64Encoded: true,
     };
   } catch (err) {
-    console.error('Error reading images:', err);
+    console.error('Error in handler:', err);
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: 'Error reading images', details: err.message, path: testFolder }),
+      body: JSON.stringify({ 
+        error: 'Error processing request', 
+        details: err.message, 
+        stack: err.stack 
+      }),
     };
   }
 };
