@@ -4,7 +4,8 @@
   "description": "random image",
   "main": "index.js",
   "scripts": {
-    "build": "netlify deploy --prod",
+    "start": "netlify dev",
+    "build": "echo \"No build step\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "samad",
@@ -14,5 +15,6 @@
     "node-cache": "^5.1.2",
     "netlify-cli": "^12.7.2",
     "netlify-lambda": "^2.0.15"
-  }
+  },
+  "keywords": []
 }
