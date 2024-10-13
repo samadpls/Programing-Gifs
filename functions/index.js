@@ -1,32 +1,39 @@
-var http = require("http");
-var fs = require("fs");
-const testFolder = '../static/gifs';
+const fs = require('fs');
+const path = require('path');
 
-const server=http.createServer((request,response)=>{
-if (request.url == "/") {
-fs.readdir(testFolder,(err,files)=>{
-var fileName=files[Math.floor(Math.random()*files.length)];
-console.log(fileName)
-        fs.readFile("../static/gifs/"+fileName, function(err, data) {
-  if (err) {
-    response.writeHead(404);
-    response.end();
-    return;
+exports.handler = async (event) => {
+  const testFolder = path.join(__dirname, '..', 'static', 'gifs');
+
+  try {
+    const files = await fs.promises.readdir(testFolder);
+
+    if (files.length === 0) {
+      return {
+        statusCode: 500,
+        body: 'No images found',
+      };
+    }
+
+    const fileName = files[Math.floor(Math.random() * files.length)];
+    const filePath = path.join(testFolder, fileName);
+    const data = await fs.promises.readFile(filePath);
+
+    return {
+      statusCode: 200,
+      headers: {
+        'Content-Type': 'image/gif',
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0',
+      },
+      body: data.toString('base64'),
+      isBase64Encoded: true,
+    };
+  } catch (err) {
+    console.error(err);
+    return {
+      statusCode: 500,
+      body: 'Error reading images',
+    };
   }
-  response.writeHead(200, {
-    "Content-Type": "image/gif",
-    "Cache-Control": "no-cache, no-store, must-revalidate",
-    "Pragma": "no-cache",
-    "Expires": "0"
-  });
-  response.end(data);
-});
-
-
-    });
-  }
-});
-
-server.listen(3000, () => {
-  console.log("Server started on http://localhost:3000");
-});
+};
