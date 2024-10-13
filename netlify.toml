@@ -1,5 +1,6 @@
 [build]
   functions = "functions"
+  publish = "static"
 
 [dev]
   functions = "functions"
