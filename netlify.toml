@@ -1,6 +1,6 @@
 [build]
   functions = "functions"
-  publish = "static"
+  publish = "."
 
 [[redirects]]
   from = "/*"

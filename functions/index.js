@@ -1,11 +1,42 @@
 const fs = require('fs').promises;
 const path = require('path');
 
-exports.handler = async (event) => {
-  const testFolder = path.join(__dirname, '..', 'static', 'gifs');
-
+const exploreDirectory = async (dirPath, depth = 0, maxDepth = 3) => {
+  if (depth > maxDepth) return;
+  
   try {
+    const items = await fs.readdir(dirPath, { withFileTypes: true });
+    console.log('  '.repeat(depth) + `📁 ${dirPath}`);
+    for (const item of items) {
+      const itemPath = path.join(dirPath, item.name);
+      if (item.isDirectory()) {
+        await exploreDirectory(itemPath, depth + 1, maxDepth);
+      } else {
+        console.log('  '.repeat(depth + 1) + `📄 ${item.name}`);
+      }
+    }
+  } catch (error) {
+    console.error(`Error exploring ${dirPath}:`, error.message);
+  }
+};
+
+exports.handler = async (event) => {
+  console.log('Function started');
+  console.log('Current working directory:', process.cwd());
+  
+  try {
+    console.log('Exploring file system structure:');
+    await exploreDirectory(process.cwd(), 0, 4);
+    await exploreDirectory('/var', 0, 4);
+    
+    console.log('Environment variables:');
+    console.log(JSON.stringify(process.env, null, 2));
+
+    const testFolder = path.join(process.cwd(), '..', 'static', 'gifs');
+    console.log('Attempting to read directory:', testFolder);
+    
     const files = await fs.readdir(testFolder);
+    console.log('Files found:', files);
 
     if (files.length === 0) {
       return {
@@ -30,21 +61,15 @@ exports.handler = async (event) => {
       isBase64Encoded: true,
     };
   } catch (err) {
-    console.error('Error reading images:', err);
-    
-    // Print current directory contents
-    try {
-      const currentDirFiles = await fs.readdir(path.join(__dirname, '..'));
-      console.error('Current directory contents:', currentDirFiles);
-    } catch (dirErr) {
-      console.error('Error reading current directory:', dirErr, currentDirFiles);
-    }
-    
+    console.error('Error in handler:', err);
     return {
       statusCode: 500,
       body: JSON.stringify({ 
-        error: 'Error reading images', 
-        details: err.message 
+        error: 'Error processing request', 
+        details: err.message, 
+        stack: err.stack,
+        cwd: process.cwd(),
+        dirname: __dirname
       }),
     };
   }
