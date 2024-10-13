@@ -32,7 +32,7 @@ exports.handler = async (event) => {
     console.log('Environment variables:');
     console.log(JSON.stringify(process.env, null, 2));
 
-    const testFolder = path.join(process.cwd(), '..', 'static', 'gifs');
+    const testFolder = path.join(process.cwd(), 'static', 'gifs');
     console.log('Attempting to read directory:', testFolder);
     
     const files = await fs.readdir(testFolder);
