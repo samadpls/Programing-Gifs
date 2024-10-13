@@ -1,9 +1,10 @@
+const express = require('express');
 const fs = require('fs').promises;
 const path = require('path');
+const app = express();
 
 const exploreDirectory = async (dirPath, depth = 0, maxDepth = 3) => {
   if (depth > maxDepth) return;
-  
   try {
     const items = await fs.readdir(dirPath, { withFileTypes: true });
     console.log('  '.repeat(depth) + `📁 ${dirPath}`);
@@ -20,8 +21,8 @@ const exploreDirectory = async (dirPath, depth = 0, maxDepth = 3) => {
   }
 };
 
-exports.handler = async (event) => {
-  console.log('Function started');
+app.get('/', async (req, res) => {
+  console.log('Request received');
   console.log('Current working directory:', process.cwd());
   console.log('__dirname:', __dirname);
   
@@ -40,10 +41,6 @@ exports.handler = async (event) => {
       await exploreDirectory(p, 0, 3);
     }
     
-    console.log('Environment variables:');
-    console.log(JSON.stringify(process.env, null, 2));
-
-    // Attempt to find the gifs folder
     let gifsFolder = null;
     for (const p of potentialPaths) {
       const testPath = path.join(p, 'static', 'gifs');
@@ -65,38 +62,36 @@ exports.handler = async (event) => {
     console.log('Files found:', files);
 
     if (files.length === 0) {
-      return {
-        statusCode: 500,
-        body: JSON.stringify({ error: 'No images found' }),
-      };
+      return res.status(500).json({ error: 'No images found' });
     }
 
     const fileName = files[Math.floor(Math.random() * files.length)];
     const filePath = path.join(gifsFolder, fileName);
     const data = await fs.readFile(filePath);
 
-    return {
-      statusCode: 200,
-      headers: {
-        'Content-Type': 'image/gif',
-        'Cache-Control': 'no-cache, no-store, must-revalidate',
-        'Pragma': 'no-cache',
-        'Expires': '0',
-      },
-      body: data.toString('base64'),
-      isBase64Encoded: true,
-    };
+    res.setHeader('Content-Type', 'image/gif');
+    res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+    res.setHeader('Pragma', 'no-cache');
+    res.setHeader('Expires', '0');
+    res.send(data);
+
   } catch (err) {
-    console.error('Error in handler:', err);
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ 
-        error: 'Error processing request', 
-        details: err.message, 
-        stack: err.stack,
-        cwd: process.cwd(),
-        dirname: __dirname
-      }),
-    };
+    console.error('Error:', err);
+    res.status(500).json({ 
+      error: 'Error processing request', 
+      details: err.message,
+      stack: err.stack,
+      cwd: process.cwd(),
+      dirname: __dirname
+    });
   }
-};
+});
+
+if (process.env.NODE_ENV !== 'production') {
+  const port = process.env.PORT || 3000;
+  app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
+  });
+}
+
+module.exports = app;
