@@ -16,7 +16,7 @@ exports.handler = async (event) => {
 
     const fileName = files[Math.floor(Math.random() * files.length)];
     const filePath = path.join(testFolder, fileName);
-    const data = await fs.promises.readFile(filePath);
+    const data = await fs.promises.readFile(filePath); 
 
     return {
       statusCode: 200,
@@ -30,7 +30,7 @@ exports.handler = async (event) => {
       isBase64Encoded: true,
     };
   } catch (err) {
-    console.error(err);
+    console.error('Error reading images:', err);
     return {
       statusCode: 500,
       body: 'Error reading images',
