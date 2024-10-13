@@ -2,8 +2,8 @@ const fs = require('fs').promises;
 const path = require('path');
 
 exports.handler = async (event) => {
-  // Adjust path according to the deployed structure
-  const testFolder = path.join(__dirname, '..', 'static', 'gifs');
+
+  const testFolder = path.join(__dirname, '..', 'gifs');
 
   try {
     const files = await fs.readdir(testFolder);
