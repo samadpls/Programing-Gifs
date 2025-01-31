@@ -5,13 +5,13 @@
   "main": "index.js",
   "scripts": {
     "start": "node api/index.js",
-    "build": "echo \"No build step\"",
+    "build": "mkdir -p public && cp -r static/* public/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "samad",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.18.2", 
+    "express": "^4.18.2",
     "node-cache": "^5.1.2"
   },
   "keywords": []
