@@ -23,27 +23,17 @@ const exploreDirectory = async (dirPath, depth = 0, maxDepth = 3) => {
 
 app.get('/', async (req, res) => {
   console.log('Request received');
-  console.log('Current working directory:', process.cwd());
-  console.log('__dirname:', __dirname);
   
   const potentialPaths = [
-    process.cwd(),
-    path.join(process.cwd(), '..'),
-    '/var/task',
-    '/opt',
-    '/'
+    path.join(process.cwd(), 'public/gifs'),
+    path.join(process.cwd(), 'static/gifs'),
+    path.join(__dirname, '../public/gifs'),
+    path.join(__dirname, '../static/gifs')
   ];
 
   try {
-    console.log('Exploring file system structure:');
-    for (const p of potentialPaths) {
-      console.log(`Exploring ${p}:`);
-      await exploreDirectory(p, 0, 3);
-    }
-    
     let gifsFolder = null;
-    for (const p of potentialPaths) {
-      const testPath = path.join(p, 'static', 'gifs');
+    for (const testPath of potentialPaths) {
       try {
         await fs.access(testPath);
         gifsFolder = testPath;
@@ -54,7 +44,7 @@ app.get('/', async (req, res) => {
     }
 
     if (!gifsFolder) {
-      throw new Error('Gifs folder not found in any of the expected locations');
+      throw new Error('Gifs folder not found');
     }
 
     console.log('Gifs folder found at:', gifsFolder);
